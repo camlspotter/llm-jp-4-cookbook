@@ -12,7 +12,7 @@ with adopting the
 [OpenAI's Harmony Response Format](https://developers.openai.com/cookbook/articles/openai-harmony)
 as their default response structure.
 
-Harmony Response Format brings ability of flexible response construction with reasoning and tool calls,
+Harmony brings ability of flexible response construction with reasoning and tool calls,
 but users need to apply custom parsing due to lack of fine-grained supports for custom tokenizers in the
 [official parser implementation](https://github.com/openai/harmony).
 
