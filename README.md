@@ -9,6 +9,11 @@ At this moment, this repository contains the following subdirectories for specif
 * [`llmjp4_transformers`](llmjp4_transformers) ... for Huffing Face's [Transformers](https://github.com/huggingface/transformers)
 * [`llmjp4_vllm`](llmjp4_vllm) ... for [vLLM](https://github.com/vllm-project/vllm)
 
+## `trust_remote_code` is required
+
+As described below, LLM-jp-4 models bundle several plugins to ensure the models work correctly.
+To enable them, users need to turn on `trust_remote_code` flag in the corresponding runtimes.
+
 ## Using `llm-jp-4-*-instruct` Models
 
 LLM-jp-4 models with the suffix `-instruct` are fine-tuned models for chatbot applications.
@@ -29,6 +34,7 @@ Specifically, users need to take care about:
   into the resulting text to avoid known issues around the Sentencepiece library
   [(1)](https://github.com/huggingface/transformers/pull/26678)
   [(2)](https://github.com/huggingface/transformers/issues/28218).
+  LLM-jp-4 models bundle their own tokenizer (`llmjp4_tokenizer.py`) to work around this issue.
 * **Input Template**: Users need to apply Harmony to their chat inputs.
   This is basically achieved by using the bundled chat template (jinja2) in the LLM-jp-4 models,
   but for some cases users might need to implement their own encoding strategy
