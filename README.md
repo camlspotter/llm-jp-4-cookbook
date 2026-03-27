@@ -6,6 +6,11 @@
 
 This repository contains several examples to use LLM-jp-4 fine-tuned models.
 
+At this moment, this repository contains the following subdirectories for specific LLM runtimes:
+
+* [`llmjp4_transformers`](llmjp4_transformers) ... for Huffing Face's [Transformers](https://github.com/huggingface/transformers)
+* [`llmjp4_vllm`](llmjp4_vllm) ... for [vLLM](https://github.com/vllm-project/vllm)
+
 LLM-jp-4 models with the suffix `-instruct` are fine-tuned models for chatbot applications.
 They are constructed upon corresponding `-base` models in the same model series,
 with adopting the
@@ -32,11 +37,6 @@ Specifically, users need to take care about:
   to obtain accurate parsing results (due to the same reason described in the "Input Templates").
   For convenience, LLM-jp-4 models also bundle a parser library for Harmony-encoded tokens
   (`llmjp4_harmony.py`).
-
-At this moment, this repository contains the following subdirectories for specific LLM runtimes:
-
-* [`llmjp4_transformers`](llmjp4_transformers) ... for Huffing Face's [Transformers](https://github.com/huggingface/transformers)
-* [`llmjp4_vllm`](llmjp4_vllm) ... for [vLLM](https://github.com/vllm-project/vllm)
 
 ## Notes for Other `llm-jp-4` Models
 
