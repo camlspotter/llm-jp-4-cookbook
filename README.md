@@ -2,7 +2,7 @@
 
 * Author: Yusuke Oda (@odashi)
 
-This repository contains several examples to use LLM-jp-4 fine-tuned models.
+This repository provides several examples to use LLM-jp-4 fine-tuned models.
 
 At this moment, this repository contains the following subdirectories for specific LLM runtimes:
 
