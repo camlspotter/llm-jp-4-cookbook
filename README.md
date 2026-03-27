@@ -14,6 +14,11 @@ At this moment, this repository contains the following subdirectories for specif
 As described below, LLM-jp-4 models bundle several plugins to ensure the models work correctly.
 To enable them, users need to turn on `trust_remote_code` flag in the corresponding runtimes.
 
+If users want not to turn on `trust_remote_code` for some reason,
+users can instead import corresponding Python code from this repository and/or
+[llm-jp-tokenizer](https://github.com/llm-jp/llm-jp-tokenizer/tree/main/hf/ver4.0/alpha_1.0)
+by themselves.
+
 ## Using `llm-jp-4-*-instruct` Models
 
 LLM-jp-4 models with the suffix `-instruct` are fine-tuned models for chatbot applications.
