@@ -19,7 +19,7 @@ users can instead import corresponding Python code from this repository and/or
 [llm-jp-tokenizer](https://github.com/llm-jp/llm-jp-tokenizer/tree/main/hf/ver4.0/alpha_1.0)
 by themselves.
 
-## Using `llm-jp-4-*-instruct` Models
+## Using `llm-jp-4-*-instruct` models
 
 LLM-jp-4 models with the suffix `-instruct` are fine-tuned models for chatbot applications.
 
@@ -50,7 +50,7 @@ Specifically, users need to take care about:
   For convenience, LLM-jp-4 models also bundle a parser library for Harmony-encoded tokens
   (`llmjp4_harmony.py`).
 
-## Using Other `llm-jp-4` Models
+## Using other `llm-jp-4` models
 
 LLM-jp-4 models with the suffix `-base` are basic language models without any fine-tuning.
 Their behavior is basically compatible with the base architecture
@@ -63,7 +63,7 @@ users may encounter the same issues described above.
 To provide the same solution, `-base` models also bundle the same functionality
 with `-instruct` models.
 
-## Test Environments
+## Test environments
 
 All examples are tested using the following environment:
 
