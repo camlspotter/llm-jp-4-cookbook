@@ -1,4 +1,6 @@
 # Generic parser for OpenAI Harmony format.
+# This is basically identical with the bundled parser in LLM-jp-4 models,
+# but typing annotation is modified to follow vLLM standards.
 
 from dataclasses import dataclass
 from enum import Enum
