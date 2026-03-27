@@ -38,17 +38,6 @@ At this moment, this repository contains the following subdirectories for specif
 * [`llmjp4_transformers`](llmjp4_transformers) ... for Huffing Face's [Transformers](https://github.com/huggingface/transformers)
 * [`llmjp4_vllm`](llmjp4_vllm) ... for [vLLM](https://github.com/vllm-project/vllm)
 
-All examples are tested using the following environment:
-
-| | |
-|:--- |:--- |
-| CPU | Intel Core i9-14900K |
-| RAM | 32GiB |
-| GPU | NVIDIA RTX 6000 Ada Generation |
-| OS | Debian GNU/Linux 12 |
-| NVIDIA driver version | 580.119.02 |
-| CUDA library version | 12.8 |
-
 ## Notes for Other `llm-jp-4` Models
 
 LLM-jp-4 models with the suffix `-base` are basic language models without any fine-tuning.
@@ -61,3 +50,16 @@ or adding their own special tokens into the vocabulary,
 users may encounter the same issues described above.
 To provide the same solution, `-base` models also bundle the same functionality
 with `-instruct` models.
+
+# Test Environments
+
+All examples are tested using the following environment:
+
+| | |
+|:--- |:--- |
+| CPU | Intel Core i9-14900K |
+| RAM | 32GiB |
+| GPU | NVIDIA RTX 6000 Ada Generation |
+| OS | Debian GNU/Linux 12 |
+| NVIDIA driver version | 580.119.02 |
+| CUDA library version | 12.8 |
