@@ -2,7 +2,7 @@
 
 * Author: Yusuke Oda (@odashi)
 
-## Notes for `llm-jp-4-*-instruct` Models
+## Using `llm-jp-4-*-instruct` Models
 
 This repository contains several examples to use LLM-jp-4 fine-tuned models.
 
@@ -38,7 +38,7 @@ Specifically, users need to take care about:
   For convenience, LLM-jp-4 models also bundle a parser library for Harmony-encoded tokens
   (`llmjp4_harmony.py`).
 
-## Notes for Other `llm-jp-4` Models
+## Using Other `llm-jp-4` Models
 
 LLM-jp-4 models with the suffix `-base` are basic language models without any fine-tuning.
 Their behavior is basically compatible with the base architecture
