@@ -2,8 +2,6 @@
 
 * Author: Yusuke Oda (@odashi)
 
-## Using `llm-jp-4-*-instruct` Models
-
 This repository contains several examples to use LLM-jp-4 fine-tuned models.
 
 At this moment, this repository contains the following subdirectories for specific LLM runtimes:
@@ -12,6 +10,8 @@ At this moment, this repository contains the following subdirectories for specif
 * [`llmjp4_vllm`](llmjp4_vllm) ... for [vLLM](https://github.com/vllm-project/vllm)
 
 LLM-jp-4 models with the suffix `-instruct` are fine-tuned models for chatbot applications.
+## Using `llm-jp-4-*-instruct` Models
+
 They are constructed upon corresponding `-base` models in the same model series,
 with adopting the
 [OpenAI's Harmony Response Format](https://developers.openai.com/cookbook/articles/openai-harmony)
