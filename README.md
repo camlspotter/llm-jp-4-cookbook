@@ -9,8 +9,9 @@ At this moment, this repository contains the following subdirectories for specif
 * [`llmjp4_transformers`](llmjp4_transformers) ... for Huffing Face's [Transformers](https://github.com/huggingface/transformers)
 * [`llmjp4_vllm`](llmjp4_vllm) ... for [vLLM](https://github.com/vllm-project/vllm)
 
-LLM-jp-4 models with the suffix `-instruct` are fine-tuned models for chatbot applications.
 ## Using `llm-jp-4-*-instruct` Models
+
+LLM-jp-4 models with the suffix `-instruct` are fine-tuned models for chatbot applications.
 
 They are constructed upon corresponding `-base` models in the same model series,
 with adopting the
