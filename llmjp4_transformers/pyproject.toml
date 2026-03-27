@@ -1,0 +1,11 @@
+[project]
+name = "llmjp4-transformers"
+version = "0.1.0"
+description = ""
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "accelerate>=1.13.0",
+    "torch>=2.10.0",
+    "transformers[serving]==5.2.0",
+]
