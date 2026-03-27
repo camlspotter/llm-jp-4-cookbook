@@ -14,7 +14,7 @@ They are constructed upon corresponding `-base` models with adopting the
 [OpenAI's Harmony Response Format](https://developers.openai.com/cookbook/articles/openai-harmony)
 as their default response format.
 Harmony brings ability of flexible response construction with reasoning and tool calls,
-bsers need to apply custom parsing due to lack of better supports for custom tokenizers in the
+but users need to apply custom parsing due to lack of better supports for custom tokenizers in the
 [official parser](https://github.com/openai/harmony).
 
 At this moment, this repository contains the following subdirectories for specific runtimes:
