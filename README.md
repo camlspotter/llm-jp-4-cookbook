@@ -20,16 +20,18 @@ Specifically, users need to take care about:
 
 * **Tokenizer**: LLM-jp-4 models are using LlamaTokenizer (Sentencepiece),
   but users need to take additional care before detokenizing output tokens
-  into the resulting text to avoid known issues around sentencepiece library
+  into the resulting text to avoid known issues around the Sentencepiece library
   [(1)](https://github.com/huggingface/transformers/pull/26678)
   [(2)](https://github.com/huggingface/transformers/issues/28218).
 * **Input Template**: Users need to apply Harmony to their chat inputs.
-  This is basically achieved by using the bundled chat template in the LLM-jp-4 models.
-* **Output Parsing**: Since Harmony is a special token-based encoding,
-  users need to analyse output tokens directly rather than detokenized texts
-  to obtain accurate parsing results.
-  For convenience, LLM-jp-4 models also bundle parsing functionality
-  based on tokens (`llmjp4_harmony.py`).
+  This is basically achieved by using the bundled chat template (jinja2) in the LLM-jp-4 models,
+  but for some cases users might need to implement their own encoding strategy
+  (e.g., the case that user inputs contain the same string with special tokens `<|...|>`).
+* **Output Parsing**: Since Harmony is a token-based encoding,
+  users might need to analyse output tokens directly rather than detokenized texts
+  to obtain accurate parsing results (due to the same reason described in the "Input Templates").
+  For convenience, LLM-jp-4 models also bundle a parser library for Harmony-encoded tokens
+  (`llmjp4_harmony.py`).
 
 At this moment, this repository contains the following subdirectories for specific LLM runtimes:
 
