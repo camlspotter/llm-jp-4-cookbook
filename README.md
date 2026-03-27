@@ -55,6 +55,7 @@ Their behavior is basically compatible with the base architecture
 and users are able to use these models without special treatment.
 
 Note that if users are trying to use some special tokens in the `-base` models or their inheritances,
+or adding their own special tokens into the vocabulary,
 users may encounter the same issues described above.
-To provide the same solution, `-base` models also bundles the same functionality
+To provide the same solution, `-base` models also bundle the same functionality
 with `-instruct` models.
