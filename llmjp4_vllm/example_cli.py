@@ -4,8 +4,8 @@
 # Usage: python example_cli.py [...rest of vllm CLI arguments]
 #
 # Example:
-# The following command runs the llm-jp-4-8b-instruct model with the llmjp4 reasoning parser.
-# python example_cli.py serve llm-jp/llm-jp-4-8b-instruct --reasoning-parser llmjp4 --trust-remote-code
+# The following command runs the llm-jp-4-8b-thinking model with the llmjp4 reasoning parser.
+# python example_cli.py serve llm-jp/llm-jp-4-8b-thinking --reasoning-parser llmjp4 --trust-remote-code
 
 from vllm.entrypoints.cli import main as cli_main
 
@@ -15,3 +15,4 @@ import llmjp4_reasoning_parser
 
 if __name__ == "__main__":
     cli_main.main()
+``
