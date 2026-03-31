@@ -19,9 +19,11 @@ users can instead import corresponding Python code from this repository and/or
 [llm-jp-tokenizer](https://github.com/llm-jp/llm-jp-tokenizer/tree/main/hf/ver4.0/alpha_1.0)
 by themselves.
 
-## Using `llm-jp-4-*-instruct` models
+## Using `llm-jp-4-*-instruct` and `llm-jp-4-*-thinking` models
 
-LLM-jp-4 models with the suffix `-instruct` are fine-tuned models for chatbot applications.
+LLM-jp-4 models with the suffix `-instruct` or `-thinking` are fine-tuned models for chatbot applications.
+`-instruct` models are tuned for responding without reasoning,
+while `-thinking` models work with a specific reasoning effort (`low` or `middle`).
 
 They are constructed upon corresponding `-base` models in the same model series,
 with adopting the
