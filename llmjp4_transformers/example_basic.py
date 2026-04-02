@@ -1,36 +1,17 @@
 # This file contains code to use LLM-jp-4 models with Hugging Face Transformers library.
 
-
-import argparse
-
 import torch
-from transformers import (
-    AutoModelForCausalLM,
-    AutoTokenizer,
-)
-
-
-def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser()
-    parser.add_argument(
-        "--model",
-        type=str,
-        required=True,
-        help="Model name or path.",
-    )
-    return parser.parse_args()
+from transformers import AutoModelForCausalLM, AutoTokenizer
 
 
 def main():
-    args = parse_args()
-
     tokenizer = AutoTokenizer.from_pretrained(
-        args.model,
+        "llm-jp/llm-jp-4-8b-thinking",
         # trust_remote_code is required to load custom tokenizer and reasoning parser.
         trust_remote_code=True,
     )
     model = AutoModelForCausalLM.from_pretrained(
-        args.model,
+        "llm-jp/llm-jp-4-8b-thinking",
         dtype=torch.bfloat16,
         device_map="auto",
         trust_remote_code=True,
@@ -45,6 +26,7 @@ def main():
         messages,
         tokenize=False,
         add_generation_prompt=True,
+        reasoning_effort="medium",
     )
 
     print("--- Prompt ---")

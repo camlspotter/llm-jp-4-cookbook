@@ -23,7 +23,7 @@ by themselves.
 
 LLM-jp-4 models with the suffix `-instruct` or `-thinking` are fine-tuned models for chatbot applications.
 `-instruct` models are tuned for responding without reasoning,
-while `-thinking` models work with a specific reasoning effort (`low` or `middle`).
+while `-thinking` models work with a specific reasoning effort (`low`, `medium`, or `high`).
 
 They are constructed upon corresponding `-base` models in the same model series,
 with adopting the

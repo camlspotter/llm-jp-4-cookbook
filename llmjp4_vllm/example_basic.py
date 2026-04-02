@@ -1,28 +1,13 @@
 # Example script to use LLM-jp-4 models with vLLM.
 
-import argparse
-
 from vllm import LLM, SamplingParams
 
 from llmjp4_harmony import HarmonyMessageParser
 
 
-def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser()
-    parser.add_argument(
-        "--model",
-        type=str,
-        required=True,
-        help="Model name or path.",
-    )
-    return parser.parse_args()
-
-
 def main():
-    args = parse_args()
-
     llm = LLM(
-        model=args.model,
+        model="llm-jp/llm-jp-4-8b-thinking",
         dtype="bfloat16",
         # trust_remote_code is required to load custom tokenizer and reasoning parser.
         trust_remote_code=True,
@@ -37,6 +22,7 @@ def main():
         messages,
         tokenize=False,
         add_generation_prompt=True,
+        reasoning_effort="medium",
     )
 
     print("--- Prompt ---")
