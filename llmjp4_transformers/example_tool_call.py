@@ -57,6 +57,11 @@ def parse_args() -> argparse.Namespace:
         choices=["low", "medium", "high"],
         help="Reasoning effort passed to the chat template.",
     )
+    parser.add_argument(
+        "--system-prompt",
+        default=None,
+        help="Optional system prompt. If omitted, no system message is added.",
+    )
     return parser.parse_args()
 
 
@@ -76,16 +81,10 @@ def main():
     model.eval()
 
     tools = build_tools()
-    messages = [
-        {
-            "role": "system",
-            "content": (
-                "If a suitable tool is available, do not explain. "
-                "Emit the tool call immediately."
-            ),
-        },
-        {"role": "user", "content": args.prompt},
-    ]
+    messages = []
+    if args.system_prompt:
+        messages.append({"role": "system", "content": args.system_prompt})
+    messages.append({"role": "user", "content": args.prompt})
 
     prompt: str = tokenizer.apply_chat_template(
         messages,
