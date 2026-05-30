@@ -48,6 +48,7 @@ _LOGGER = logging.getLogger(__name__)
 
 @ToolParserManager.register_module(["llmjp4"])
 class Llmjp4ToolParser(ToolParser):
+    supports_required_and_named = False
 
     def __init__(self, tokenizer: TokenizerLike, tools=None):
         super().__init__(tokenizer, tools)
