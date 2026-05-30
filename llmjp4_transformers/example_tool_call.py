@@ -45,6 +45,9 @@ Rules:
 - Do not put the tool call in the final channel.
 - Do not output pseudo-code such as get_weather({...}).
 - Do not wrap the JSON in markdown code fences.
+- Do not replace <|message|> with a newline.
+- Do not end the tool call with <|return|>.
+- The tool call must end with <|call|>.
 """
 
 
