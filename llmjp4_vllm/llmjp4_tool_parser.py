@@ -1,3 +1,4 @@
+import json
 import logging
 import os
 import re
@@ -94,6 +95,10 @@ class Llmjp4ToolParser(ToolParser):
             for message in messages
             if (tool_call := self._build_tool_call(message, request)) is not None
         ]
+        if not tool_calls:
+            fallback_tool_call = self._build_raw_json_tool_call(model_output, request)
+            if fallback_tool_call is not None:
+                tool_calls = [fallback_tool_call]
         content = self._collect_final_content(messages)
         self._debug(
             "extract_tool_calls parsed tool_calls=%s content=%r",
@@ -195,6 +200,15 @@ class Llmjp4ToolParser(ToolParser):
     ) -> list[DeltaToolCall]:
         previous_calls = self._extract_tool_call_states(previous_messages, request)
         current_calls = self._extract_tool_call_states(current_messages, request)
+        if not previous_calls and not current_calls:
+            previous_calls = self._extract_raw_json_tool_call_states(
+                previous_token_ids,
+                request,
+            )
+            current_calls = self._extract_raw_json_tool_call_states(
+                current_token_ids,
+                request,
+            )
 
         deltas: list[DeltaToolCall] = []
 
@@ -353,6 +367,80 @@ class Llmjp4ToolParser(ToolParser):
         if message.content is None:
             return ""
         return self.model_tokenizer.decode(message.content.token_ids).strip()
+
+    def _build_raw_json_tool_call(
+        self,
+        model_output: str,
+        request: ChatCompletionRequest,
+    ) -> ToolCall | None:
+        fallback_state = self._extract_raw_json_tool_call_state_from_text(
+            model_output,
+            request,
+        )
+        if fallback_state is None:
+            return None
+
+        name, arguments = fallback_state
+        tool_call = ToolCall(
+            type="function",
+            function=FunctionCall(name=name, arguments=arguments),
+        )
+        self._debug(
+            "build_raw_json_tool_call tool_call=%s",
+            self._summarize_tool_call(tool_call),
+        )
+        return tool_call
+
+    def _extract_raw_json_tool_call_states(
+        self,
+        token_ids: Sequence[int],
+        request: ChatCompletionRequest,
+    ) -> list[tuple[str, str]]:
+        raw_text = self.model_tokenizer.decode(list(token_ids))
+        fallback_state = self._extract_raw_json_tool_call_state_from_text(
+            raw_text,
+            request,
+        )
+        if fallback_state is None:
+            return []
+        self._debug("raw_json_tool_call_state=%s", fallback_state)
+        return [fallback_state]
+
+    def _extract_raw_json_tool_call_state_from_text(
+        self,
+        text: str,
+        request: ChatCompletionRequest,
+    ) -> tuple[str, str] | None:
+        tool_name = self._get_fallback_tool_name(request)
+        if tool_name is None:
+            return None
+
+        stripped = text.strip()
+        if not stripped or not stripped.startswith("{"):
+            return None
+
+        try:
+            payload = json.loads(stripped)
+        except json.JSONDecodeError:
+            return None
+
+        if not isinstance(payload, dict):
+            return None
+
+        arguments = json.dumps(payload, ensure_ascii=False, separators=(",", ":"))
+        return tool_name, arguments
+
+    def _get_fallback_tool_name(self, request: ChatCompletionRequest) -> str | None:
+        tool_choice = getattr(request, "tool_choice", None)
+        function = getattr(tool_choice, "function", None)
+        forced_name = getattr(function, "name", None)
+        if forced_name:
+            return forced_name
+
+        tool_names = self._get_request_tool_names(request)
+        if len(tool_names) == 1:
+            return tool_names[0]
+        return None
 
     def _debug(self, message: str, *args) -> None:
         if self._debug_enabled and _LOGGER.isEnabledFor(logging.DEBUG):
