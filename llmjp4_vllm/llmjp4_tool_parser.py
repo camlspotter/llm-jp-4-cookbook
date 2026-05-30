@@ -9,10 +9,22 @@ try:
     from vllm.entrypoints.openai.engine.protocol import (
         DeltaFunctionCall,
         DeltaToolCall,
+        FunctionCall,
+        ToolCall,
     )
 except ImportError:
-    from vllm.entrypoints.openai.protocol import DeltaFunctionCall, DeltaToolCall
-from vllm.entrypoints.openai.protocol import ChatCompletionRequest, FunctionCall, ToolCall
+    from vllm.entrypoints.openai.protocol import (
+        DeltaFunctionCall,
+        DeltaToolCall,
+        FunctionCall,
+        ToolCall,
+    )
+try:
+    from vllm.entrypoints.openai.chat_completion.protocol import (
+        ChatCompletionRequest,
+    )
+except ImportError:
+    from vllm.entrypoints.openai.protocol import ChatCompletionRequest
 try:
     from vllm.entrypoints.openai.tool_parsers.abstract_tool_parser import (
         ExtractedToolCallInformation,
