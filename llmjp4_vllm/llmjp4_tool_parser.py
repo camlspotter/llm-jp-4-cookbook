@@ -143,6 +143,8 @@ class Llmjp4ToolParser(ToolParser):
         tool_call_delta = self._collect_tool_call_delta(
             previous_messages,
             current_messages,
+            previous_token_ids,
+            current_token_ids,
             request,
         )
         self._debug(
@@ -196,6 +198,8 @@ class Llmjp4ToolParser(ToolParser):
         self,
         previous_messages: Sequence[HarmonyMessage],
         current_messages: Sequence[HarmonyMessage],
+        previous_token_ids: Sequence[int],
+        current_token_ids: Sequence[int],
         request: ChatCompletionRequest,
     ) -> list[DeltaToolCall]:
         previous_calls = self._extract_tool_call_states(previous_messages, request)
