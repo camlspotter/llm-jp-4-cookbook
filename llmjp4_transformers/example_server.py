@@ -1,4 +1,5 @@
 import argparse
+import logging
 from typing import Any
 
 import torch
@@ -8,6 +9,8 @@ from pydantic import BaseModel, Field
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
 from example_tool_call import build_one_shot_instruction, build_tools
+
+LOGGER = logging.getLogger(__name__)
 
 
 class InspectRequest(BaseModel):
@@ -83,6 +86,12 @@ def create_app(state: AppState) -> FastAPI:
 
     @app.post("/inspect")
     def inspect(request: InspectRequest) -> dict[str, Any]:
+        LOGGER.info(
+            "inspect request received: use_one_shot=%s max_new_tokens=%s reasoning_effort=%s",
+            request.use_one_shot,
+            request.max_new_tokens,
+            request.reasoning_effort,
+        )
         messages = request.messages or build_default_messages(
             system_prompt=request.system_prompt,
             use_one_shot=request.use_one_shot,
@@ -96,8 +105,10 @@ def create_app(state: AppState) -> FastAPI:
             add_generation_prompt=True,
             reasoning_effort=request.reasoning_effort,
         )
+        LOGGER.info("inspect prompt built: prompt_chars=%s", len(prompt))
 
         inputs = state.tokenizer(prompt, return_tensors="pt").to(state.model.device)
+        LOGGER.info("inspect generate start: input_tokens=%s", inputs["input_ids"].shape[1])
 
         with torch.no_grad():
             output_tensor = state.model.generate(
@@ -107,6 +118,7 @@ def create_app(state: AppState) -> FastAPI:
                 temperature=request.temperature,
                 top_p=request.top_p,
             )
+        LOGGER.info("inspect generate done")
 
         generated_ids: list[int] = output_tensor[0][
             inputs["input_ids"].shape[1]:
@@ -156,6 +168,10 @@ def parse_args() -> argparse.Namespace:
 
 def main():
     args = parse_args()
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s %(levelname)s %(name)s: %(message)s",
+    )
     state = AppState(args.model)
     app = create_app(state)
     uvicorn.run(app, host=args.host, port=args.port)
