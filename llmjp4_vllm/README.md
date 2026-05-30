@@ -3,5 +3,6 @@
 Use `example_cli.py` with both `--reasoning-parser llmjp4` and
 `--tool-call-parser llmjp4` when serving Harmony-based tool calling models.
 
-Set `LLMJP4_VLLM_DEBUG=1` and raise the Python logging level to `DEBUG` to inspect
-how the custom tool parser interprets Harmony messages inside vLLM.
+Set `LLMJP4_VLLM_DEBUG=1` to have `example_cli.py` enable debug logs only for
+`llmjp4_tool_parser` and inspect how the custom tool parser interprets Harmony
+messages inside vLLM.
