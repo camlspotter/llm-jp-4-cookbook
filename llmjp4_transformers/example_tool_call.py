@@ -31,6 +31,23 @@ def build_tools() -> list[dict]:
     ]
 
 
+def build_one_shot_instruction() -> str:
+    return """Tool-call format example:
+
+If the user says:
+札幌の現在の天気を取得してください。
+
+Then output exactly this assistant message and nothing else:
+<|channel|>commentary to=functions.get_weather<|message|>{"city":"札幌","unit":"celsius"}<|call|>
+
+Rules:
+- If a tool is needed, emit a commentary-channel tool call.
+- Do not put the tool call in the final channel.
+- Do not output pseudo-code such as get_weather({...}).
+- Do not wrap the JSON in markdown code fences.
+"""
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Inspect tool-calling behavior of LLM-jp-4 with Transformers."
@@ -62,6 +79,12 @@ def parse_args() -> argparse.Namespace:
         default=None,
         help="Optional system prompt. If omitted, no system message is added.",
     )
+    parser.add_argument(
+        "--use-one-shot",
+        action=argparse.BooleanOptionalAction,
+        default=True,
+        help="Whether to prepend a strict one-shot tool-call example.",
+    )
     return parser.parse_args()
 
 
@@ -82,8 +105,13 @@ def main():
 
     tools = build_tools()
     messages = []
+    system_parts: list[str] = []
     if args.system_prompt:
-        messages.append({"role": "system", "content": args.system_prompt})
+        system_parts.append(args.system_prompt)
+    if args.use_one_shot:
+        system_parts.append(build_one_shot_instruction())
+    if system_parts:
+        messages.append({"role": "system", "content": "\n\n".join(system_parts)})
     messages.append({"role": "user", "content": args.prompt})
 
     prompt: str = tokenizer.apply_chat_template(
