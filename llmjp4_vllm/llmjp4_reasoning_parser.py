@@ -17,6 +17,11 @@ from vllm.tokenizers import TokenizerLike
 from llmjp4_harmony import HarmonyMessageParser
 
 
+import os
+import logging
+_LOGGER = logging.getLogger(__name__)
+
+
 @ReasoningParserManager.register_module(["llmjp4"])
 class Llmjp4ReasoningParser(ReasoningParser):
 
@@ -32,6 +37,12 @@ class Llmjp4ReasoningParser(ReasoningParser):
         self._message_id = vocab["<|message|>"]
         self._reasoning_end_prefix = tokenizer.encode("<|channel|>final")
         self._reasoning_prefill = tokenizer.encode("<|start|>assistant")
+        self._debug_enabled = os.getenv("LLMJP4_VLLM_DEBUG", "").lower() in {
+            "1",
+            "true",
+            "yes",
+            "on",
+        }
     
     def is_reasoning_end(self, input_ids: Sequence[int]) -> bool:
         # Find the final message pattern: <|channel|>final ... <|message|>
@@ -150,3 +161,8 @@ class Llmjp4ReasoningParser(ReasoningParser):
             reasoning="".join(reasoning_delta) if reasoning_delta else None,
             content="".join(content_delta) if content_delta else None,
         )
+
+    def _debug(self, message: str, *args) -> None:
+        if self._debug_enabled and _LOGGER.isEnabledFor(logging.DEBUG):
+            _LOGGER.debug("[llmjp4_tool_parser] " + message, *args)
+

@@ -70,7 +70,6 @@ def serialize_harmony_message(tokenizer, message) -> dict[str, Any]:
             payload[key] = None
             continue
         payload[key] = {
-            "token_ids": value.token_ids,
             "text": tokenizer.decode(value.token_ids),
             "start": value.start,
         }

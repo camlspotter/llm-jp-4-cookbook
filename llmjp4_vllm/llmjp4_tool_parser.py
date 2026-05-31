@@ -129,34 +129,8 @@ class Llmjp4ToolParser(ToolParser):
         delta_token_ids: Sequence[int],
         request: ChatCompletionRequest,
     ) -> DeltaMessage | None:
-        previous_messages = self._parse_messages_from_ids(previous_token_ids)
-        current_messages = self._parse_messages_from_ids(current_token_ids)
-        self._debug(
-            "extract_tool_calls_streaming prev_tokens=%d curr_tokens=%d prev_messages=%s curr_messages=%s",
-            len(previous_token_ids),
-            len(current_token_ids),
-            self._summarize_messages(previous_messages),
-            self._summarize_messages(current_messages),
-        )
-
-        content_delta = self._collect_content_delta(previous_messages, current_messages)
-        tool_call_delta = self._collect_tool_call_delta(
-            previous_messages,
-            current_messages,
-            previous_token_ids,
-            current_token_ids,
-            request,
-        )
-        self._debug(
-            "extract_tool_calls_streaming content_delta=%r tool_call_delta=%s",
-            content_delta,
-            [self._summarize_delta_tool_call(delta) for delta in tool_call_delta],
-        )
-
-        if content_delta is None and not tool_call_delta:
-            return None
-
-        return DeltaMessage(content=content_delta, tool_calls=tool_call_delta or [])
+        # Always return None
+        return None
 
     def _parse_messages_from_text(self, model_output: str) -> list[HarmonyMessage]:
         token_ids = self.model_tokenizer.encode(self._assistant_prefill_text + model_output)
