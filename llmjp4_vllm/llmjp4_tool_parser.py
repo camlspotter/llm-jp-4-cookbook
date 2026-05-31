@@ -129,7 +129,7 @@ class Llmjp4ToolParser(ToolParser):
         delta_token_ids: Sequence[int],
         request: ChatCompletionRequest,
     ) -> DeltaMessage | None:
-        self.debug('extract_tool_calls_streaming: %s', current_text)
+        self._debug('extract_tool_calls_streaming: %s', current_text)
         # Always return None
         return None
 
