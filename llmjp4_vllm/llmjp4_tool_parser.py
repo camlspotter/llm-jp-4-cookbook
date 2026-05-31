@@ -130,8 +130,10 @@ class Llmjp4ToolParser(ToolParser):
         request: ChatCompletionRequest,
     ) -> DeltaMessage | None:
         self._debug('extract_tool_calls_streaming: %s', current_text)
-        # Always return None
-        return None
+        return DeltaMessage(
+            content= delta_text,
+            tool_calls= [],
+        )
 
     def _parse_messages_from_text(self, model_output: str) -> list[HarmonyMessage]:
         token_ids = self.model_tokenizer.encode(self._assistant_prefill_text + model_output)
